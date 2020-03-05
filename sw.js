@@ -10,20 +10,29 @@ var urlsToCache = [
     '/css/main.css',
     '/icons/icon_timer.png',
     '/images/hello.jpg',
-    '/images/icon-72x72.png',
-    '/images/icon-96x96.png',
-    '/images/icon-128x128.png',
-    '/images/icon-144x144.png',
-    '/images/icon-152x152.png',
+    '/icons/icon-72x72.png',
+    '/icons/icon-96x96.png',
+    '/icons/icon-128x128.png',
+    '/icons/icon-144x144.png',
+    '/icons/icon-152x152.png',
+    '/icons/icon-192x192.png',
+    '/icons/icon-384x384.png',
+    '/icons/icon-512x512.png',
     'images/offline.png',
     '/scripts/site.js',
     '/scripts/timer.js',
     'index.html',
     'sw.js',
     'manifest.json',
-    '/templates/offline.html'
-
+    '/templates/offline.html',
+    'libraries/jquery/jquery.min.js',
+    'libraries/jquery/jquery.slim.min.js',
+    'libraries/bootstrap/js/bootstrap.bundle.min.js',
+    'libraries/bootstrap/css/bootstrap.min.css',
+    'libraries/bootstrap/css/bootstrap-grid.min.css',
+    'libraries/bootstrap/css/bootstrap-reboot.min.css'
 ];
+
 
 self.addEventListener('install', function (event) {
     // Install steps
@@ -95,6 +104,6 @@ self.addEventListener('notificationclick', function (event) {
 
     } else {
         // We don't have window access here, so we use clients
-        clients.openWindow("https://www.youtube.com/watch?v=E8BeSSdIUW4");
+        clients.openWindow('https://www.youtube.com/watch?v=E8BeSSdIUW4');
     }
 })

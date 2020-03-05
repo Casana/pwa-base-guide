@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,21 +8,38 @@
 		content="A javascript countdown clock or timer with beautiful HTML and CSS styling that is simple to use in any project or on any website .">
 	<meta name="Keywords"
 		content="javascript, js, countdown, clock, timer, css, html, website, design, beautiful timer, countdown clock, countdown timer, javascript timer, javascript countdown clock, javascript countdown timer">
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
+	<meta name="theme-color" content="#2196f3"/>
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
-	<link rel="manifest" href="/manifest.json"></link>
+	<link rel="manifest" href="/manifest.json">
+	</link>
+	
+	<script defer type="text/javascript" src="libraries/jquery/jquery.min.js"></script>
+	<script defer type="text/javascript" src="libraries/jquery/jquery.slim.min.js"></script>
+	<script defer type="text/javascript" src="libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+	</link>
+	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap-grid.min.css">
+	</link>
+	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap-reboot.min.css">
+	</link>
 </head>
 
 <body>
 	<div>
+		<h1>Battery</h1>
+		<p id="charging"></p>
+		<div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+				aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+
+		<h1>Device Position</h1>
 		<h2>Geolocation</h2>
 		<p id="startLat"></p>
 		<p id="startLon"></p>
 		<p id="accuracy"></p>
-		<h2>Battery</h2>
-		<p id="charging"></p>
-		<p id="batteryLevel"></p>
 		<h2>Device orientation</h2>
 		<p id="alpha"></p>
 		<p id="beta"></p>
@@ -55,7 +72,7 @@
 		</ul>
 	</div>
 	<div class="display">
-		<img src="https://miro.medium.com/max/2800/1*hWVmsnBY6Fr6OoNvIU5pmg.png">
+		<img src="https://miro.medium.com/max/2800/1*hWVmsnBY6Fr6OoNvIU5pmg.png" alt="pwa logo">
 	</div>
 	<script type="text/javascript" src="scripts/timer.js"></script>
 	<script type="text/javascript" src="scripts/site.js"></script>

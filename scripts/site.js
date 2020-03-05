@@ -10,6 +10,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
             Notification.requestPermission().then(function (permission) {
                 console.info('Current permission status is: ' + permission);
             });
+            // Now that we are registered, we start to use web APIs
             getGeolocation();
             getOrientation();
             getDeviceBattery();
@@ -24,7 +25,6 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 
 /**
  * 
- * @param {*} registrationistration 
  */
 function initializeUI() {
     myServiceWorker.pushManager.getSubscription().then(
@@ -41,11 +41,9 @@ function initializeUI() {
 };
 
 
-
 // WEB APIS: 
 // https://developer.mozilla.org/en-US/docs/Web/API
 // https://w3c.github.io/geolocation-api/#api_description
-
 
 /**
  * https://developers.google.com/web/fundamentals/native-hardware/user-location
@@ -53,32 +51,36 @@ function initializeUI() {
 function getGeolocation() {
     navigator.geolocation.getCurrentPosition(
         function (position) {
-            console.info(position);
             document.getElementById('startLat').innerHTML = 'Current latitude is: ' + position.coords.latitude;
             document.getElementById('startLon').innerHTML = 'Current longitude is: ' + position.coords.longitude;
-            document.querySelector('.accuracy').innerHTML = 'Distance accuracy is: ' + position.coords.accuracy;
+            document.querySelector('#accuracy').innerHTML = 'Distance accuracy is: ' + position.coords.accuracy;
         }, function () {
             console.error('Not able to get current position')
         });
 };
 
 /**
- * 
+ * Subscribes to deviceorientation event, so it updates device orientation when it changes
  */
 function getOrientation() {
     if (window.DeviceOrientationEvent) {
-        console.info("deviceorientation supported!");      
+        // deviceorientation supported
         window.addEventListener('deviceorientation', function (orientationInfo) {
-            updateDeviceOrientation (orientationInfo)
+            updateDeviceOrientation(orientationInfo)
         });
     }
 
+    /**
+     * Updates documents showing the new orientation values.
+     * @param {Object} orientationData 
+     */
     function updateDeviceOrientation(orientationData) {
         document.getElementById('alpha').innerHTML = 'α: ' + orientationData.alpha;
         document.getElementById('beta').innerHTML = 'β: ' + orientationData.beta;
         document.getElementById('gamma').innerHTML = 'γ: ' + orientationData.gamma;
     }
 };
+
 
 /**
  * Get battery data, update it and set event listeners so we update every time charging and level changes.
@@ -102,7 +104,31 @@ function getDeviceBattery() {
      */
     function updateBatteryInfo(batteryData) {
         document.getElementById('charging').innerHTML = batteryData.charging ? 'Battery is charging' : 'Charger not connected';
-        document.getElementById('batteryLevel').innerHTML = 'Battery level:' + batteryData.level * 100 + '%';
+        $(".progress-bar").css({
+            "width": batteryData.level * 100 + '%'
+        });
+        switch (true) {
+            case (batteryData.level * 100 > 80):
+                $('.progress-bar').addClass('bg-success');
+                break;
+            case (batteryData.level  * 100 > 60):
+                $('.progress-bar').addClass('bg-info');
+                break;
+            case (batteryData.level  * 100 > 40):
+                $('.progress-bar').addClass('bg-warning');
+                break;
+            case (batteryData.level  * 100 > 20):
+                $('.progress-bar').addClass('bg-danger');
+                break;
+            default:
+                $('.progress-bar').removeClass('bg-success');
+                $('.progress-bar').removeClass('bg-info');
+                $('.progress-bar').removeClass('bg-warning');
+                $('.progress-bar').removeClass('bg-danger');
+                break;
+        }
+        $('.progress-bar')[0].setAttribute('aria-valuenow', batteryData.level * 100 + '%');
+        $('.progress-bar')[0].innerHTML = 'BATTERY LEVEL: ' + batteryData.level * 100 + '%';
     }
 }
 
